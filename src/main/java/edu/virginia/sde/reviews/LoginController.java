@@ -45,15 +45,16 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (UserDatabaseManager.userExist(userName)) {
-            System.out.println("User already exists. Registration failed.");
             setStatus("User already exists. Registration failed.");
         } else {
-            if (UserDatabaseManager.addUser(userName, password)) {
-                System.out.println("User registered successfully.");
-                setStatus("User registered successfully.");
+            if (password.length() >= 8) {
+                if (UserDatabaseManager.addUser(userName, password)) {
+                    setStatus("User registered successfully.");
+                } else {
+                    setStatus("Failed to register user.");
+                }
             } else {
-                System.out.println("Failed to register user.");
-                setStatus("Failed to register user.");
+                setStatus("Password must be at least 8 characters.");
             }
         }
     }
