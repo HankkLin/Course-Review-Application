@@ -11,9 +11,15 @@ public class CourseReviewsApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent root = loader.load();
+//        CourseSearchController courseSearchController = loader.getController();
+//        Scene mainScene = new Scene(root, 800, 600);
+//        courseSearchController.setMainScene(mainScene);
 
         LoginController loginController = loader.getController();
         loginController.setPrimaryStage(primaryStage);
+
+        loader = new FXMLLoader(getClass().getResource("courseList.fxml"));
+        CourseSearchController courseSearchController = loader.getController();
 
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("Login Page");

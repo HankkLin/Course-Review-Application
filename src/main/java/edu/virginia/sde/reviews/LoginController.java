@@ -64,7 +64,7 @@ public class LoginController {
             Parent root = loader.load();
 
             CourseSearchController courseSearchController = loader.getController();
-            courseSearchController.initialize(userName);
+            courseSearchController.initialize(userName, primaryStage);
 
             Scene scene = new Scene(root, 800, 600);
             primaryStage.setTitle("Course List Page");
