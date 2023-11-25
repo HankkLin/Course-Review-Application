@@ -29,7 +29,7 @@ public class UserDetailsController {
             courseSearchController.initialize(userName, primaryStage);
 
             Scene scene = new Scene(root, 800, 600);
-            primaryStage.setTitle("Main Page");
+            primaryStage.setTitle("Course List Page");
             primaryStage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();

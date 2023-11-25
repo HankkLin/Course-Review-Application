@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 // UserDatabaseManager.java
 public class UserDatabaseManager {
@@ -16,9 +18,11 @@ public class UserDatabaseManager {
 
     private static void createTableIfNotExists() {
         try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
-            String createTableQuery = "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, userName TEXT, password TEXT)";
+            String createUserTableQuery = "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, userName TEXT, password TEXT)";
+            String createCourseTableQuery = "CREATE TABLE IF NOT EXISTS courses (subject TEXT, number INTEGER, title TEXT, rating REAL, PRIMARY KEY(subject, number, title))";
             try (Statement statement = connection.createStatement()) {
-                statement.execute(createTableQuery);
+                statement.execute(createUserTableQuery);
+                statement.execute(createCourseTableQuery);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,11 +67,66 @@ public class UserDatabaseManager {
                 preparedStatement.setString(2, password);
 
                 int rowsAffected = preparedStatement.executeUpdate();
-                return rowsAffected > 0; // User added successfully if rows affected > 0
+                return rowsAffected > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static List<Course> searchCourses(String subject, int number, String title) {
+        List<Course> courses = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            StringBuilder queryBuilder = new StringBuilder("SELECT * FROM courses");
+            if (!subject.isEmpty()) {
+                queryBuilder.append(" WHERE subject = ?");
+            }
+            if (number != 0) {
+                if (!subject.isEmpty()) {
+                    queryBuilder.append(" AND");
+                } else {
+                    queryBuilder.append(" WHERE");
+                }
+                queryBuilder.append(" number = ?");
+            }
+            if (!title.isEmpty()) {
+                if (!subject.isEmpty() || number != 0) {
+                    queryBuilder.append(" AND");
+                } else {
+                    queryBuilder.append(" WHERE");
+                }
+                queryBuilder.append(" title LIKE ?");
+            }
+            //System.out.println(queryBuilder.toString());
+            try (PreparedStatement statement = connection.prepareStatement(queryBuilder.toString())) {
+                int parameterIndex = 1;
+                if (!subject.isEmpty()) {
+                    statement.setString(parameterIndex++, subject);
+                }
+                if (number != 0) {
+                    statement.setInt(parameterIndex++, number);
+                }
+                if (!title.isEmpty()) {
+                    statement.setString(parameterIndex, "%" + title + "%");
+                }
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Course course = new Course();
+                        course.setSubject(resultSet.getString("subject"));
+                        course.setNumber(resultSet.getInt("number"));
+                        course.setTitle(resultSet.getString("title"));
+                        course.setRating(resultSet.getDouble("rating"));
+                        courses.add(course);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return courses;
     }
 }
