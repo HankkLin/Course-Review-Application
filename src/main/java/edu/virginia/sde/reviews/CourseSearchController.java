@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.util.List;
+import javafx.scene.layout.VBox;
+
 
 
 
@@ -27,15 +29,32 @@ public class CourseSearchController {
     private Stage primaryStage;
     private String userName;
     private Scene mainScene;
+    @FXML
+    TableView<Course> tableView;
+    @FXML
+    TableColumn<Course, String> subjectColumn;
+    @FXML
+    TableColumn<Course, Integer> numberColumn;
+    @FXML
+    TableColumn<Course, String> titleColumn;
+    @FXML
+    TableColumn<Course, Double> avgScoreColumn;
 
+    private ObservableList<Course> courseData;
     public void initialize(String userName, Stage primaryStage) {
         this.userName = userName;
         this.primaryStage = primaryStage;
         nameLabel.setText(userName);
         searchLabel.setText("Type in different info to search");
-    }
-    public void setMainScene(Scene mainScene) {
-        this.mainScene = mainScene;
+
+        subjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        avgScoreColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+
+        // Initialize the data list
+        courseData = FXCollections.observableArrayList();
+        tableView.setItems(courseData);
     }
     @FXML
     private void showUserDetails() {
@@ -84,6 +103,6 @@ public class CourseSearchController {
         }
         searchLabel.setText(result.toString());
 
-        ObservableList<Course> courseData = FXCollections.observableArrayList(courses);
+        courseData.setAll(courses);
     }
 }
