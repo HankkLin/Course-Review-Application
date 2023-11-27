@@ -55,6 +55,7 @@ public class CourseSearchController {
         // Initialize the data list
         courseData = FXCollections.observableArrayList();
         tableView.setItems(courseData);
+        tableView.setVisible(false);
     }
     @FXML
     private void showUserDetails() {
@@ -86,6 +87,8 @@ public class CourseSearchController {
                 }
             } catch (NumberFormatException e) {
                 searchLabel.setText("Error in Course Number: " + e.getMessage());
+                searchLabel.setVisible(true);
+                tableView.setVisible(false);
                 return;
             }
         }
@@ -94,15 +97,20 @@ public class CourseSearchController {
         List<Course> courses = UserDatabaseManager.searchCourses(subject, number, title);
         if (courses.isEmpty()){
             searchLabel.setText("No course found, try soemthing else.");
+            searchLabel.setVisible(true);
+            tableView.setVisible(false);
             return;
         }
-        //Help function
-        StringBuilder result = new StringBuilder();
-        for (Course course : courses) {
-            result.append(course.toString()).append("\n");
-        }
-        searchLabel.setText(result.toString());
-
+        tableView.setVisible(true);
+        searchLabel.setVisible(false);
         courseData.setAll(courses);
+
+        //Help function that print out the result as a string
+//        StringBuilder result = new StringBuilder();
+//        for (Course course : courses) {
+//            result.append(course.toString()).append("\n");
+//        }
+//        searchLabel.setText(result.toString());
+
     }
 }
