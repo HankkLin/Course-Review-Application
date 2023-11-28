@@ -113,4 +113,22 @@ public class CourseSearchController {
 //        searchLabel.setText(result.toString());
 
     }
+    public void addButtonClicked(){
+
+    }
+    public void logoutButtonClicked(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = loader.load();
+
+            LoginController loginController = loader.getController();
+            loginController.setPrimaryStage(primaryStage);
+
+            Scene scene = new Scene(root, 800, 600);
+            primaryStage.setTitle("User Details");
+            primaryStage.setScene(scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
