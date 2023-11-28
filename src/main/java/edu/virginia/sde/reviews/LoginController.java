@@ -8,7 +8,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.scene.layout.*;
 
 import java.sql.SQLException;
 
@@ -24,7 +23,7 @@ public class LoginController {
     private void setStatus(String message) {
         statusLabel.setText(message);
     }
-    public void setPrimaryStage(Stage primaryStage) {
+    public void initialize(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
     public void loginButtonClicked() {
