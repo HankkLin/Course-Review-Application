@@ -16,7 +16,7 @@ public class CourseReviewsApplication extends Application {
 //        courseSearchController.setMainScene(mainScene);
 
         LoginController loginController = loader.getController();
-        loginController.setPrimaryStage(primaryStage);
+        loginController.initialize(primaryStage);
 
         loader = new FXMLLoader(getClass().getResource("courseList.fxml"));
         CourseSearchController courseSearchController = loader.getController();

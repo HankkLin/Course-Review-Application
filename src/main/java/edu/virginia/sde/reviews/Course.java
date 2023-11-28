@@ -1,6 +1,16 @@
 package edu.virginia.sde.reviews;
 
 public class Course {
+    public Course(String subject, int number, String title) {
+        this.subject = subject;
+        this.number = number;
+        this.title = title;
+        this.rating = 0.0;
+    }
+    public Course(){
+
+    }
+
     public String getSubject() {
         return subject;
     }
@@ -42,7 +52,6 @@ public class Course {
     public String toString() {
         return "Subject: " + subject +
                 ", Number: " + number +
-                ", Title: " + title +
-                ", Average Score: " + rating;
+                ", Title: " + title;
     }
 }

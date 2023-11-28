@@ -8,12 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.util.List;
-import javafx.scene.layout.VBox;
-
-
 
 
 public class CourseSearchController {
@@ -114,6 +110,57 @@ public class CourseSearchController {
 
     }
     public void addButtonClicked(){
+        String subject = subjectSearchBar.getText();
+        String numberString = numberSearchBar.getText();
+        int number;
+        if (numberString.equals("")){
+            searchLabel.setText("Can't add a course with empty course number!");
+            searchLabel.setVisible(true);
+            tableView.setVisible(false);
+            return;
+        } else {
+            try {
+                number = Integer.parseInt(numberString);
+                if (number < 1 || number > 9999) {
+                    throw new NumberFormatException("Number must be a positive integer with at most 4 digits to add course");
+                }
+            } catch (NumberFormatException e) {
+                searchLabel.setText("Error in Course Number: " + e.getMessage());
+                searchLabel.setVisible(true);
+                tableView.setVisible(false);
+                return;
+            }
+        }
+        String title = titleSearchBar.getText();
+        if(subject.equals("")){
+            searchLabel.setText("Can't add a course with empty subject!");
+            searchLabel.setVisible(true);
+            tableView.setVisible(false);
+            return;
+        }
+        if(title.equals("")){
+            searchLabel.setText("Can't add a course with empty title!");
+            searchLabel.setVisible(true);
+            tableView.setVisible(false);
+            return;
+        }
+        if(UserDatabaseManager.checkCourseExist(subject,number,title)){
+            Course newCourse = new Course(subject,number,title);
+            searchLabel.setText("Course already exist: " + newCourse.toString());
+            searchLabel.setVisible(true);
+            tableView.setVisible(false);
+            return;
+        }
+        Course newCourse = new Course(subject,number,title);
+        if(UserDatabaseManager.addCourse(subject,number,title)) {
+            searchLabel.setText("Add course: " + newCourse.toString());
+            searchLabel.setVisible(true);
+            tableView.setVisible(false);
+            return;
+        }
+        else{
+
+        }
 
     }
     public void logoutButtonClicked(){
@@ -122,7 +169,7 @@ public class CourseSearchController {
             Parent root = loader.load();
 
             LoginController loginController = loader.getController();
-            loginController.setPrimaryStage(primaryStage);
+            loginController.initialize(primaryStage);
 
             Scene scene = new Scene(root, 800, 600);
             primaryStage.setTitle("User Details");

@@ -75,6 +75,23 @@ public class UserDatabaseManager {
         }
     }
 
+    public static boolean addCourse(String subject, int number, String title){
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            String query = "INSERT INTO courses (subject, number, title, rating) VALUES (?, ?, ?, 0.0)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, subject);
+                preparedStatement.setInt(2, number);
+                preparedStatement.setString(3, title);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static List<Course> searchCourses(String subject, int number, String title) {
         List<Course> courses = new ArrayList<>();
 
@@ -128,5 +145,26 @@ public class UserDatabaseManager {
         }
 
         return courses;
+    }
+
+    public static boolean checkCourseExist(String subject, int number, String title) {
+
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            StringBuilder queryBuilder = new StringBuilder("SELECT * FROM courses WHERE subject = ? AND number = ? AND title = ?");
+            //System.out.println(queryBuilder.toString());
+            try (PreparedStatement statement = connection.prepareStatement(queryBuilder.toString())) {
+                statement.setString(1,subject);
+                statement.setInt(2,number);
+                statement.setString(3,title);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    return resultSet.next();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }
