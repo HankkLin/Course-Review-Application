@@ -20,9 +20,12 @@ public class UserDatabaseManager {
         try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
             String createUserTableQuery = "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, userName TEXT, password TEXT)";
             String createCourseTableQuery = "CREATE TABLE IF NOT EXISTS courses (subject TEXT, number INTEGER, title TEXT, rating REAL, PRIMARY KEY(subject, number, title))";
+            String createReviewTableQuery = "CREATE TABLE IF NOT EXISTS reviews (rating INTEGER, comment TEXT, user TEXT, time TEXT, subject TEXT, number INTEGER, title TEXT, " +
+                    "FOREIGN KEY(subject, number, title) REFERENCES courses(subject, number, title), FOREIGN KEY(user) REFERENCES users(userName))";
             try (Statement statement = connection.createStatement()) {
                 statement.execute(createUserTableQuery);
                 statement.execute(createCourseTableQuery);
+                statement.execute(createReviewTableQuery);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,6 +148,36 @@ public class UserDatabaseManager {
         }
 
         return courses;
+    }
+
+    public static List<Review> searchReviewBaseOnUser(String user) {
+        List<Review> reviews = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            StringBuilder queryBuilder = new StringBuilder("SELECT * FROM reviews WHERE user = ?");
+
+            try (PreparedStatement statement = connection.prepareStatement(queryBuilder.toString())) {
+                statement.setString(1, user);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Course course = new Course();
+                        course.setSubject(resultSet.getString("subject"));
+                        course.setNumber(resultSet.getInt("number"));
+                        course.setTitle(resultSet.getString("title"));
+                        int rating = resultSet.getInt("rating");
+                        String comment = resultSet.getString("comment");
+                        String time = resultSet.getString("time");
+                        Review review = new Review(user, rating, comment, time, course);
+                        reviews.add(review);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return reviews;
     }
 
     public static boolean checkCourseExist(String subject, int number, String title) {
