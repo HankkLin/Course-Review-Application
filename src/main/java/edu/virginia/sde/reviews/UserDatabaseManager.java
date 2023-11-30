@@ -223,29 +223,97 @@ public class UserDatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return reviews;
     }
 
-    public static boolean alreadyMakeReview(String user, Course course){
-        return true;
+    public static boolean alreadyMakeReview(String userName, Course course){
+        String subject = course.getSubject();
+        int number = course.getNumber();
+        String title = course.getTitle();
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            String query = "SELECT * FROM reviews WHERE user = ? AND subject = ? AND number = ? AND title = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, userName);
+                preparedStatement.setString(2, subject);
+                preparedStatement.setInt(3, number);
+                preparedStatement.setString(4, title);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    return resultSet.next();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static Review getReview(String userName, Course course){
+        Review review = null;
+        String subject = course.getSubject();
+        int number = course.getNumber();
+        String title = course.getTitle();
+
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            StringBuilder queryBuilder = new StringBuilder("SELECT * FROM reviews WHERE user = ? AND subject = ? AND number = ? and title = ?");
+
+            try (PreparedStatement statement = connection.prepareStatement(queryBuilder.toString())) {
+                statement.setString(1, userName);
+                statement.setString(2, subject);
+                statement.setInt(3, number);
+                statement.setString(4, title);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        course.setSubject(resultSet.getString("subject"));
+                        course.setNumber(resultSet.getInt("number"));
+                        course.setTitle(resultSet.getString("title"));
+                        int rating = resultSet.getInt("rating");
+                        String comment = resultSet.getString("comment");
+                        String time = resultSet.getString("time");
+                        review = new Review(userName, rating, comment, time, course);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return review;
     }
 
-    public static boolean addReview(double rating, String review, Timestamp timestamp, User user, Course course){
+    public static boolean addReview(int rating, String review, Timestamp timestamp, String userName, Course course){
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            String insertReviewQuery = "INSERT INTO reviews (rating, user, time, subject, number, title, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertReviewQuery)) {
+                preparedStatement.setInt(1, rating);
+                preparedStatement.setString(2, userName);
+                preparedStatement.setString(3, timestamp.toString());
+                preparedStatement.setString(4, course.getSubject());
+                preparedStatement.setInt(5, course.getNumber());
+                preparedStatement.setString(6, course.getTitle());
+                preparedStatement.setString(7,review);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         //add review
         //also update the rating in course
         //first find how many reviews are there, rating * amount of reviews, then + rating
 
-        return true;
+        //return true;
     }
 
-    public static boolean editReview(double rating, String review, Timestamp timestamp, User user, Course course){
+    public static boolean editReview(int rating, String review, Timestamp timestamp, String user, Course course){
         if (deleteReview(user, course)) {
             return (addReview(rating, review, timestamp, user, course));
         }
         return false;
     }
-    public static boolean deleteReview(User user, Course course){
+    public static boolean deleteReview(String user, Course course){
         //also need to update rating in course
         return true;
     }

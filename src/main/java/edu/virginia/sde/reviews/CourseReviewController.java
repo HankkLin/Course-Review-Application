@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class CourseReviewController {
@@ -19,11 +20,11 @@ public class CourseReviewController {
 
     private Stage primaryStage;
     private String userName;
-
+    private Course course;
     @FXML
     TableView<Review> tableView;
     @FXML
-    TableColumn<Review, Double> ratingColumn;
+    TableColumn<Review, Integer> ratingColumn;
     @FXML
     TableColumn<Review, String> commentColumn;
     @FXML
@@ -47,6 +48,7 @@ public class CourseReviewController {
     public void initialize(String userName, Course course, Stage primaryStage) {
         this.userName = userName;
         this.primaryStage = primaryStage;
+        this.course = course;
         courseLabel.setText(course.toString());
 
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
@@ -65,10 +67,16 @@ public class CourseReviewController {
             editReviewButton.setVisible(true);
             deleteReviewButton.setVisible(true);
             addReviewButton.setVisible(false);
+            Review review = userDatabaseManager.getReview(userName, course);
+            reviewTextField.setText(review.comment);
+            ratingSlider.setValue(review.rating);
         } else {
             editReviewButton.setVisible(false);
             deleteReviewButton.setVisible(false);
             addReviewButton.setVisible(true);
+            reviewTextField.setText("");
+            ratingSlider.setValue(1);
+
         }
     }
 
@@ -90,14 +98,22 @@ public class CourseReviewController {
     }
     @FXML
     private void addReview(){
+        int rating = (int)ratingSlider.getValue();
+        String comment = reviewTextField.getText();
+        System.out.println(comment);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        userDatabaseManager.addReview(rating, comment, timestamp, this.userName, this.course);
+        initialize(userName,course,primaryStage);
     }
     @FXML
     private void editReview(){
+        initialize(userName,course,primaryStage);
 
     }
     @FXML
     private void deleteReview(){
-
+        initialize(this.userName, this.course, this.primaryStage);
+        //also need to initialize again
     }
 }
 
