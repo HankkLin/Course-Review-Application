@@ -1,10 +1,5 @@
 package edu.virginia.sde.reviews;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,7 +171,6 @@ public class UserDatabaseManager {
             e.printStackTrace();
         }
 
-
         return reviews;
     }
 
@@ -199,5 +193,60 @@ public class UserDatabaseManager {
             return false;
         }
 
+    }
+
+    public static List<Review> searchReviewBaseOnCourse(Course course) {
+        List<Review> reviews = new ArrayList<>();
+        String subject = course.getSubject();
+        int number = course.getNumber();
+        String title = course.getTitle();
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            StringBuilder queryBuilder = new StringBuilder("SELECT * FROM reviews WHERE subject = ? AND number = ? and title = ?");
+
+            try (PreparedStatement statement = connection.prepareStatement(queryBuilder.toString())) {
+                statement.setString(1, subject);
+                statement.setInt(2, number);
+                statement.setString(3, title);
+
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String user = resultSet.getString("user");
+                        int rating = resultSet.getInt("rating");
+                        String comment = resultSet.getString("comment");
+                        String time = resultSet.getString("time");
+                        Review review = new Review(user, rating, comment, time, course);
+                        reviews.add(review);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reviews;
+    }
+
+    public static boolean alreadyMakeReview(String user, Course course){
+        return true;
+    }
+
+    public static boolean addReview(double rating, String review, Timestamp timestamp, User user, Course course){
+        //add review
+        //also update the rating in course
+        //first find how many reviews are there, rating * amount of reviews, then + rating
+
+        return true;
+    }
+
+    public static boolean editReview(double rating, String review, Timestamp timestamp, User user, Course course){
+        if (deleteReview(user, course)) {
+            return (addReview(rating, review, timestamp, user, course));
+        }
+        return false;
+    }
+    public static boolean deleteReview(User user, Course course){
+        //also need to update rating in course
+        return true;
     }
 }

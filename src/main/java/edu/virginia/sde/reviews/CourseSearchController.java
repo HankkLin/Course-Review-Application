@@ -178,4 +178,26 @@ public class CourseSearchController {
             e.printStackTrace();
         }
     }
+
+    public void courseClicked(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReview.fxml"));
+            Parent root = loader.load();
+
+            Course course = tableView.getSelectionModel().getSelectedItem();
+
+            CourseReviewController courseReviewController = loader.getController();
+            courseReviewController.initialize(userName, course, primaryStage);
+
+
+            Scene scene = new Scene(root, 800, 600);
+            primaryStage.setTitle(course.toString());
+            primaryStage.setScene(scene);
+        } catch (Exception e) {
+            tableView.setVisible(false);
+            searchLabel.setVisible(true);
+            searchLabel.setText("Don't click on empty column!!");
+            e.printStackTrace();
+        }
+    }
 }
