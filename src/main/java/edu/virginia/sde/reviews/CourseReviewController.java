@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.sql.Timestamp;
@@ -53,7 +54,27 @@ public class CourseReviewController {
 
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        commentColumn.setCellFactory(column -> {
+            TableCell<Review, String> cell = new TableCell<>() {
+                private final Text text = new Text();
+                {
+                    text.wrappingWidthProperty().bind(column.widthProperty());
+                }
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setGraphic(null);
+                    } else {
+                        text.setText(item);
+                        setGraphic(text);
+                    }
+                }
+            };
+            return cell;
+        });
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+
 
         // Initialize the data list
         reviews = FXCollections.observableArrayList();
@@ -103,17 +124,27 @@ public class CourseReviewController {
         System.out.println(comment);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         userDatabaseManager.addReview(rating, comment, timestamp, this.userName, this.course);
+        userDatabaseManager.getAverageRating(this.course);
         initialize(userName,course,primaryStage);
     }
     @FXML
     private void editReview(){
+        int rating = (int)ratingSlider.getValue();
+        String comment = reviewTextField.getText();
+        System.out.println(comment);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        userDatabaseManager.editReview(rating, comment, timestamp, this.userName, this.course);
+        userDatabaseManager.getAverageRating(this.course);
         initialize(userName,course,primaryStage);
-
     }
     @FXML
     private void deleteReview(){
+        userDatabaseManager.deleteReview(this.userName, this.course);
+        userDatabaseManager.getAverageRating(this.course);
         initialize(this.userName, this.course, this.primaryStage);
         //also need to initialize again
     }
+
+
 }
 

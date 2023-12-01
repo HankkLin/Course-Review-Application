@@ -279,6 +279,40 @@ public class UserDatabaseManager {
         return review;
     }
 
+    public static double getAverageRating(Course course){
+        List<Review> reviews = searchReviewBaseOnCourse(course);
+        int total = 0;
+        double average = 0.0;
+        for (int i = 0; i < reviews.size(); i++){
+            total += reviews.get(i).getRating();
+        }
+        if(reviews.size()!=0) {
+            average = (double)total/(double)reviews.size();
+        }
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            String updateQuery = "UPDATE courses SET rating = ? WHERE subject = ? AND number = ? AND title = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setDouble(1, average);
+                preparedStatement.setString(2, course.getSubject());
+                preparedStatement.setInt(3, course.getNumber());
+                preparedStatement.setString(4, course.getTitle());
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Rating updated successfully");
+                } else {
+                    System.out.println("No matching course found");
+                }
+            }
+            return average;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return average;
+        }
+    }
+
     public static boolean addReview(int rating, String review, Timestamp timestamp, String userName, Course course){
         try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
             String insertReviewQuery = "INSERT INTO reviews (rating, user, time, subject, number, title, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -315,6 +349,29 @@ public class UserDatabaseManager {
     }
     public static boolean deleteReview(String user, Course course){
         //also need to update rating in course
-        return true;
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            // Set parameters for the PreparedStatement
+            String deleteQuery = "DELETE FROM reviews WHERE user = ? AND subject = ? AND number = ? AND title = ?";
+            try(PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, user);
+                preparedStatement.setString(2, course.getSubject());
+                preparedStatement.setInt(3, course.getNumber());
+                preparedStatement.setString(4, course.getTitle());
+
+                // Execute the delete query
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Review deleted successfully.");
+                    return true;
+                } else {
+                    System.out.println("No matching item found for deletion.");
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

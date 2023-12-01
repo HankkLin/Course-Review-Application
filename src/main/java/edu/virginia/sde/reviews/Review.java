@@ -45,6 +45,15 @@ public class Review {
     public void setCourse(Course course) {
         this.course = course;
     }
+    public String getSubject(){
+        return course.getSubject();
+    }
+    public int getNumber(){
+        return course.getNumber();
+    }
+    public String getTitle(){
+        return course.getTitle();
+    }
 
     Course course;
 
