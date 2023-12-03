@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<AnchorPane prefHeight="600.0"
+            prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.CourseSearchController"
+            fx:id = "anchorPane"
+            style="-fx-background-color: #ccb8af;"
+            stylesheets="@courseList.css">
+    <children>
+        <Label fx:id="titleLabel" layoutX="400.0" layoutY="75" text = "COURSE SEARCH" style=" -fx-text-fill: #446c0c; -fx-font-family: 'Broadway'; -fx-font-size: 45px;"/>
+
+        <TextField fx:id="subjectSearchBar"
+                   layoutX="90.0"
+                   layoutY="135.0"
+                   prefWidth="200.0"
+                   prefHeight="40.0"
+                   promptText="SUBJECT"
+                   style="-fx-prompt-text-fill: #446c0c; -fx-border-color: #446c0c; -fx-alignment: center-left; -fx-font-family: 'OCR A Extended'; -fx-border-width: 2.5px"/>
+        <TextField fx:id="numberSearchBar"
+                   layoutX="300.0"
+                   layoutY="135.0"
+                   prefWidth="200.0"
+                   prefHeight="40.0"
+                   promptText="NUMBER"
+                   style="-fx-prompt-text-fill: #446c0c; -fx-border-color: #446c0c; -fx-alignment: center-left; -fx-font-family: 'OCR A Extended'; -fx-border-width: 2.5px"/>
+        <TextField fx:id="titleSearchBar"
+                   layoutX="510.0"
+                   layoutY="135.0"
+                   prefWidth="200.0"
+                   prefHeight="40.0"
+                   promptText="TITLE"
+                   style="-fx-prompt-text-fill: #446c0c; -fx-border-color: #446c0c; -fx-alignment: center-left; -fx-font-family: 'OCR A Extended'; -fx-border-width: 2.5px"/>
+        <Button layoutX="300.0"
+                layoutY="185.0"
+                prefWidth="200.0"
+                prefHeight="40.0"
+                mnemonicParsing="false"
+                onAction="#searchButtonClicked"
+                text="SEARCH!"
+                style="-fx-background-color: #446c0c; -fx-text-fill: #ccb8af; -fx-font-family: 'OCR A Extended';" />
+        <Button fx:id="logoutButton"
+                layoutX="710.0"
+                layoutY="60.0"
+                mnemonicParsing="false"
+                onAction="#logoutButtonClicked"
+                text="logout"
+                style="-fx-background-color: #372d22; -fx-text-fill: #ccb8af; -fx-font-family: 'OCR A Extended';" />
+        <Button layoutX="610.0"
+                layoutY="550.0"
+                mnemonicParsing="false"
+                onAction="#addButtonClicked"
+                text="ADD COURSE"
+                style="-fx-background-color: #446c0c; -fx-text-fill: #ccb8af; -fx-font-family: 'OCR A Extended';" />
+        <Label fx:id="nameLabel"
+               layoutX="700.0"
+               layoutY="30.0"
+               prefWidth = "100.0"
+               onMouseClicked="#showUserDetails"
+               style=" -fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;"/>
+        <Label fx:id="searchLabel"
+               layoutX="350.0"
+               layoutY="300.0"
+               style=" -fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;"/>
+
+        <TableView fx:id="tableView"
+                   prefHeight="280.0"
+                   layoutX = "100.0"
+                   layoutY = "250.0"
+                   onMouseClicked = "#courseClicked"
+                   style=" -fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;"
+                   stylesheets = "@courseList.css"
+                   >
+            <columns>
+                <TableColumn text="SUBJECT"
+                             fx:id="subjectColumn"
+                             prefWidth = "100"
+                />
+                <TableColumn text="NUMBER"
+                             fx:id="numberColumn"
+                             prefWidth="100" />
+                <TableColumn text="TITLE"
+                             fx:id="titleColumn"
+                             prefWidth="300"/>
+                <TableColumn text="RATING"
+                             fx:id="avgScoreColumn"
+                             prefWidth="100"/>
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

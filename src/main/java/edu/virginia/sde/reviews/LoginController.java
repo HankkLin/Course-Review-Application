@@ -88,6 +88,9 @@ public class LoginController {
         anchorPane.setRightAnchor(closeButton, size);
         closeButton.setAlignment(Pos.CENTER);
         closeButton.setPrefHeight(height);
+
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(50);
     }
     public void loginButtonClicked() {
         String userName = usernameField.getText();
@@ -130,6 +133,7 @@ public class LoginController {
             courseSearchController.initialize(userName, primaryStage);
 
             Scene scene = new Scene(root, 800, 600);
+            scene.getStylesheets().add(getClass().getResource("courseList.css").toExternalForm());
             primaryStage.setTitle("Course List Page");
             primaryStage.setScene(scene);
             primaryStage.show();

@@ -1,0 +1,30 @@
+#tableView .column-header-background {
+    -fx-background-color: #446c0c; /* Color for the first column header */
+}
+
+#subjectColumn .label {
+    -fx-background-color: #ccb8af; /* Background color for cells in the SUBJECT column */
+}
+
+#numberColumn .label {
+    -fx-background-color: #ccb8af; /* Background color for cells in the NUMBER column */
+}
+
+#titleColumn .label {
+    -fx-background-color: #ccb8af; /* Background color for cells in the TITLE column */
+}
+
+#avgScoreColumn .label {
+    -fx-background-color: #ccb8af; /* Background color for cells in the RATING column */
+}
+
+#tableView .column-header {
+    -fx-border-width: 0 0 1 0; /* Bottom border for column headers (except the last one) */
+    -fx-border-color: transparent transparent #446c0c transparent; /* Border color for column headers */
+}
+
+#tableView .table-row-cell {
+    -fx-background-color: #ccb8af; /* Background color for cells in other columns */
+    -fx-border-width: 0 0 1 0; /* Bottom border for cells in other columns */
+    -fx-border-color: transparent transparent #color1 transparent; /* Border color for cells in other columns */
+}

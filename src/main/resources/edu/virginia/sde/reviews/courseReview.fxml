@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Slider?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewController">
+    <children>
+        <Label fx:id="courseLabel" layoutX="150.0" layoutY="20.0" />
+        <Button layoutX="150.0" layoutY="550.0" mnemonicParsing="false" onAction="#returnToMain" text="Return to Main" />
+        <TableView fx:id="tableView" prefHeight="450.0" layoutX = "50.0" layoutY = "75.0">
+            <columns>
+                <TableColumn text="rating" fx:id="ratingColumn" prefWidth = "50"/>
+                <TableColumn text="comment" fx:id="commentColumn" prefWidth = "250"/>
+                <TableColumn text="time" fx:id="timeColumn" prefWidth = "150"/>
+            </columns>
+        </TableView>
+        <Button fx:id="addReviewButton" layoutX="600.0" layoutY="550.0" mnemonicParsing="false" onAction="#addReview" text="Add comment" />
+        <Button fx:id="editReviewButton" layoutX="550.0" layoutY="550.0" mnemonicParsing="false" onAction="#editReview" text="Edit comment" />
+        <Button fx:id="deleteReviewButton" layoutX="650.0" layoutY="550.0" mnemonicParsing="false" onAction="#deleteReview" text="Delete comment" />
+        <Slider fx:id="ratingSlider" layoutX="600.0" layoutY="500.0" blockIncrement="1.0"
+                cache="true"
+                majorTickUnit="1.0"
+                max="5.0"
+                min="1.0"
+                minorTickCount="0"
+                showTickLabels="true"
+                showTickMarks="true"
+                snapToTicks="true"
+                value="1.0" />
+        <TextArea fx:id="reviewTextField"
+                  layoutX="550.0"
+                  layoutY="100.0"
+                  prefHeight="200.0"
+                  prefWidth="150.0"
+                  wrapText="true"
+                  promptText="Type in your comment."/>
+
+    </children>
+</AnchorPane>
