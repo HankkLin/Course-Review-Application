@@ -6,6 +6,7 @@
 
 ## To Run
 Make sure to include path to JavaFX while running this application. 
+And for the grading TA, please don't resize the scene, or alot of the UI will be off. Still working, but will be weird. 
 
 ## Contributions
 
@@ -15,10 +16,9 @@ List the primary contributions of each author. It is recommended to update this 
 
 * Do everything by myself
 
-* Author 4 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
 
 ## Issues
 
-List any known issues (bugs, incorrect behavior, etc.) at the time of submission.
+In Course Search Screen, when click on a course. Possible to jump out "Click on empty course exception". 
+Exception is handled if the user really clicked on an empty course, so the user just have to search again. 
+Not sure why, chances of happening is really low, only met it around one or two times.
