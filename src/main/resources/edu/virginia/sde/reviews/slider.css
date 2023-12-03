@@ -1,0 +1,19 @@
+.slider .track{
+    -fx-background-color: #446c0c;
+    -fx-background-radius: 0;
+}
+
+.slider .thumb{
+    -fx-border-color: #446c0c;
+    -fx-background-color: #ccb8af;
+    -fx-pref-height: 15px;
+    -fx-pref-width: 5px;
+    -fx-background-radius: 0;
+}
+.slider .axis {
+    -fx-tick-label-fill: #446c0c;
+    -fx-tick-label-font-family: 'OCR A EXTENDED';
+}
+
+
+

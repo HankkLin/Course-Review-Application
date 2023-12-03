@@ -76,13 +76,18 @@ public class CourseSearchController {
         anchorPane.setLeftAnchor(nameLabel, 650.0);
         anchorPane.setRightAnchor(nameLabel, 0.0);
         nameLabel.setAlignment(Pos.CENTER);
+        nameLabel.setOnMouseEntered(event -> {
+            nameLabel.setStyle("-fx-text-fill: #FF0000; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;");
+        });
+        // Change color back on mouse exit
+        nameLabel.setOnMouseExited(event -> {
+            nameLabel.setStyle("-fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;");
+        });
 
         logoutButton.setMaxWidth(Double.MAX_VALUE);
         anchorPane.setLeftAnchor(logoutButton, 670.0);
         anchorPane.setRightAnchor(logoutButton, 20.0);
         logoutButton.setAlignment(Pos.CENTER);
-
-
     }
     @FXML
     private void showUserDetails() {

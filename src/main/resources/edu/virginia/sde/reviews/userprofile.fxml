@@ -6,18 +6,38 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.UserDetailsController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.UserDetailsController" style="-fx-background-color: #ccb8af;">
     <children>
-        <Label fx:id="nameLabel" layoutX="150.0" layoutY="50.0" />
-        <Button layoutX="150.0" layoutY="550.0" mnemonicParsing="false" onAction="#returnToMain" text="Return to Main" />
-        <TableView fx:id="tableView" prefHeight="400.0" layoutX = "50.0" layoutY = "100.0" onMouseClicked = "#reviewClicked">
+        <Label fx:id="titleLabel" layoutX="400.0" layoutY="75" text = "MY REVIEW" style=" -fx-text-fill: #446c0c; -fx-font-family: 'Broadway'; -fx-font-size: 45px;"/>
+        <Label fx:id="nameLabel"
+               layoutX="700.0"
+               layoutY="30.0"
+               prefWidth = "100.0"
+               style=" -fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;"
+        />
+        <Button layoutX="20.0"
+                layoutY="550.0"
+                prefWidth="100.0"
+                prefHeight="40.0"
+                mnemonicParsing="false"
+                onAction="#returnToMain"
+                text="BACK"
+                style="-fx-background-color: #372d22; -fx-text-fill: #ccb8af; -fx-font-family: 'OCR A Extended'; -fx-border-radius: 0px;" />
+        <TableView fx:id="tableView"
+                   prefHeight="350.0"
+                   prefWidth="710"
+                   layoutX = "50.0"
+                   layoutY = "140.0"
+                   onMouseClicked = "#reviewClicked"
+                   style=" -fx-font-family: 'OCR A Extended'; -fx-font-size: 12px;"
+                   stylesheets = "@userReview.css">
             <columns>
-                <TableColumn text="rating" fx:id="ratingColumn" prefWidth = "50"/>
-                <TableColumn text="comment" fx:id="commentColumn" prefWidth = "250"/>
-                <TableColumn text="time" fx:id="timeColumn" prefWidth = "150"/>
-                <TableColumn text="subject" fx:id="subjectColumn" prefWidth = "75"/>
-                <TableColumn text="number" fx:id="numberColumn" prefWidth = "50"/>
-                <TableColumn text="title" fx:id="titleColumn" prefWidth = "150"/>
+                <TableColumn text="RATING" fx:id="ratingColumn" prefWidth = "55"/>
+                <TableColumn text="COMMENT" fx:id="commentColumn" prefWidth = "240"/>
+                <TableColumn text="TIME" fx:id="timeColumn" prefWidth = "135"/>
+                <TableColumn text="SUBJECT" fx:id="subjectColumn" prefWidth = "63"/>
+                <TableColumn text="NUMBER" fx:id="numberColumn" prefWidth = "63"/>
+                <TableColumn text="TITLE" fx:id="titleColumn" prefWidth = "150"/>
             </columns>
         </TableView>
     </children>

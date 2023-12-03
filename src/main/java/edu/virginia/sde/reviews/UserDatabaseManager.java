@@ -317,9 +317,12 @@ public class UserDatabaseManager {
         try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
             String insertReviewQuery = "INSERT INTO reviews (rating, user, time, subject, number, title, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertReviewQuery)) {
+                String time = timestamp.toString();
+                int colonIndex = time.indexOf(":");
+                time = time.substring(0,colonIndex+3);
                 preparedStatement.setInt(1, rating);
                 preparedStatement.setString(2, userName);
-                preparedStatement.setString(3, timestamp.toString());
+                preparedStatement.setString(3, time);
                 preparedStatement.setString(4, course.getSubject());
                 preparedStatement.setInt(5, course.getNumber());
                 preparedStatement.setString(6, course.getTitle());

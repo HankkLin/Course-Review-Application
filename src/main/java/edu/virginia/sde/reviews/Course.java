@@ -50,8 +50,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Subject: " + subject +
-                ", Number: " + number +
-                ", Title: " + title;
+        return subject + " "+number +
+                "\n" + title;
     }
 }

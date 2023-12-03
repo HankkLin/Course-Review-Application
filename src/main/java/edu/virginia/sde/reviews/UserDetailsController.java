@@ -1,6 +1,7 @@
 package edu.virginia.sde.reviews;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -17,8 +19,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class UserDetailsController {
+    UserDatabaseManager userDatabaseManager;
     @FXML
     private Label nameLabel;
+    @FXML
+    private Label titleLabel;
 
     private Stage primaryStage;
     private String userName;
@@ -38,12 +43,14 @@ public class UserDetailsController {
     @FXML
     TableColumn<Review, String> timeColumn;
     private ObservableList<Review> reviews;
+    @FXML
+    private AnchorPane anchorPane;
 
 
     public void initialize(String userName, Stage primaryStage) {
         this.userName = userName;
         this.primaryStage = primaryStage;
-        nameLabel.setText("Hello, " + userName + "!");
+        nameLabel.setText(userName);
 
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
@@ -79,6 +86,16 @@ public class UserDetailsController {
         List<Review> reviewList = UserDatabaseManager.searchReviewBaseOnUser(this.userName);
         tableView.setVisible(true);
         reviews.setAll(reviewList);
+
+        titleLabel.setMaxWidth(Double.MAX_VALUE);
+        anchorPane.setLeftAnchor(titleLabel, 0.0);
+        anchorPane.setRightAnchor(titleLabel, 0.0);
+        titleLabel.setAlignment(Pos.CENTER);
+
+        nameLabel.setMaxWidth(Double.MAX_VALUE);
+        anchorPane.setLeftAnchor(nameLabel, 650.0);
+        anchorPane.setRightAnchor(nameLabel, 0.0);
+        nameLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
@@ -105,6 +122,7 @@ public class UserDetailsController {
 
             Review review = tableView.getSelectionModel().getSelectedItem();
             Course course = review.getCourse();
+            course.setRating(userDatabaseManager.getAverageRating(course));
 
             CourseReviewController courseReviewController = loader.getController();
             courseReviewController.initialize(userName, course, primaryStage);

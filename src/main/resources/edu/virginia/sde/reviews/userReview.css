@@ -14,27 +14,39 @@
 .table-view .column-header {
     -fx-background-color: transparent;
 }
-#subjectColumn .label {
+#ratingColumn .label {
     -fx-background-color: #446c0c;
     -fx-text-fill: #ccb8af;
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5px;
 }
-#numberColumn .label {
+#commentColumn .label {
     -fx-background-color: #9eab5c;
     -fx-text-fill: #372d22;
     -fx-alignment: center-left;
-    -fx-padding: 0 0 0 5px;
+    -fx-padding: 3 3 3 3px;
 }
-#titleColumn .label {
+#timeColumn .label {
     -fx-background-color: #fbd686;
     -fx-text-fill: #372d22;
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5px;
 }
-#avgScoreColumn .label {
+#subjectColumn .label {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #372d22;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5px;
+}
+#numberColumn .label {
     -fx-background-color: #e55c22;
     -fx-text-fill: #372d22;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5px;
+}
+#titleColumn .label {
+    -fx-background-color: #372d22;
+    -fx-text-fill: #ccb8af;
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5px;
 }

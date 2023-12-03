@@ -14,26 +14,20 @@
 .table-view .column-header {
     -fx-background-color: transparent;
 }
-#subjectColumn .label {
+#ratingColumn .label {
     -fx-background-color: #446c0c;
     -fx-text-fill: #ccb8af;
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5px;
 }
-#numberColumn .label {
+#commentColumn .label {
     -fx-background-color: #9eab5c;
     -fx-text-fill: #372d22;
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5px;
 }
-#titleColumn .label {
+#timeColumn .label {
     -fx-background-color: #fbd686;
-    -fx-text-fill: #372d22;
-    -fx-alignment: center-left;
-    -fx-padding: 0 0 0 5px;
-}
-#avgScoreColumn .label {
-    -fx-background-color: #e55c22;
     -fx-text-fill: #372d22;
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5px;
@@ -43,10 +37,6 @@
 }
 #tableView .table-row-cell:odd {
     -fx-background-color: derive(#ccb8af, 20%);
-}
-#tableView .table-row-cell:hover {
-    -fx-background-color: derive(#ccb8af, 60%);
-    -fx-text-background-color: #e55c22;
 }
 /* Style for the TableCell */
 .table-cell {

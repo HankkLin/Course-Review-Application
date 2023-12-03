@@ -4,10 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -18,7 +20,6 @@ public class CourseReviewController {
 
     @FXML
     private Label courseLabel;
-
     private Stage primaryStage;
     private String userName;
     private Course course;
@@ -41,6 +42,12 @@ public class CourseReviewController {
     private Slider ratingSlider;
     @FXML
     private TextArea reviewTextField;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private Label ratingLabel;
+    @FXML
+    private Label ratingWordLabel;
 
 
     UserDatabaseManager userDatabaseManager = new UserDatabaseManager();
@@ -51,6 +58,7 @@ public class CourseReviewController {
         this.primaryStage = primaryStage;
         this.course = course;
         courseLabel.setText(course.toString());
+
 
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
@@ -75,7 +83,6 @@ public class CourseReviewController {
         });
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
 
-
         // Initialize the data list
         reviews = FXCollections.observableArrayList();
         tableView.setItems(reviews);
@@ -97,8 +104,21 @@ public class CourseReviewController {
             addReviewButton.setVisible(true);
             reviewTextField.setText("");
             ratingSlider.setValue(1);
-
         }
+
+        anchorPane.setLeftAnchor(courseLabel, 50.0);
+        anchorPane.setRightAnchor(courseLabel, 250.0);
+        courseLabel.setAlignment(Pos.CENTER);
+
+        anchorPane.setLeftAnchor(ratingLabel, 600.0);
+        anchorPane.setRightAnchor(ratingLabel, 0.0);
+        ratingLabel.setAlignment(Pos.CENTER_RIGHT);
+
+        anchorPane.setLeftAnchor(ratingWordLabel, 650.0);
+        anchorPane.setRightAnchor(ratingWordLabel, 0.0);
+        ratingWordLabel.setAlignment(Pos.CENTER);
+
+        ratingLabel.setText(""+Math.round(course.getRating()*100.0)/100.0);
     }
 
     @FXML

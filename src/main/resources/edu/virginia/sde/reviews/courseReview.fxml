@@ -8,37 +8,96 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Slider?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewController">
+<AnchorPane fx:id="anchorPane"
+            prefHeight="600.0"
+            prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.CourseReviewController"
+            style="-fx-background-color: #ccb8af;">
     <children>
-        <Label fx:id="courseLabel" layoutX="150.0" layoutY="20.0" />
-        <Button layoutX="150.0" layoutY="550.0" mnemonicParsing="false" onAction="#returnToMain" text="Return to Main" />
-        <TableView fx:id="tableView" prefHeight="450.0" layoutX = "50.0" layoutY = "75.0">
+        <Label fx:id="courseLabel"
+               layoutX="150.0"
+               layoutY="50.0"
+               style=" -fx-text-fill: #446c0c; -fx-font-family: 'Broadway'; -fx-font-size: 45px;"/>
+        <Label fx:id="ratingLabel"
+               layoutX="700"
+               layoutY="50.0"
+               style=" -fx-text-fill: #fbd686; -fx-font-family: 'Broadway'; -fx-font-size: 45px;-fx-background-color: #e55c22; -fx-padding: 0 15 0 0"/>
+        <Label fx:id="ratingWordLabel"
+               layoutX="700"
+               layoutY="110.0"
+               text="AVERAGE RATING"
+               style=" -fx-text-fill: #ccb8af; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;-fx-background-color: #e55c22;"/>
+        <Button layoutX="20.0"
+                layoutY="550.0"
+                prefWidth="100.0"
+                prefHeight="40.0"
+                mnemonicParsing="false"
+                onAction="#returnToMain"
+                text="BACK"
+                style="-fx-background-color: #372d22; -fx-text-fill: #ccb8af; -fx-font-family: 'OCR A Extended'; -fx-border-radius: 0px;" />
+        <TableView fx:id="tableView"
+                   prefHeight="200.0"
+                   layoutX = "100.0"
+                   layoutY = "190.0"
+                   style=" -fx-font-family: 'OCR A Extended'; -fx-font-size: 12px;"
+                   stylesheets="@courseReview.css">
             <columns>
-                <TableColumn text="rating" fx:id="ratingColumn" prefWidth = "50"/>
-                <TableColumn text="comment" fx:id="commentColumn" prefWidth = "250"/>
-                <TableColumn text="time" fx:id="timeColumn" prefWidth = "150"/>
+                <TableColumn text="RATING" fx:id="ratingColumn" prefWidth = "60"/>
+                <TableColumn text="COMMENT" fx:id="commentColumn" prefWidth = "400"/>
+                <TableColumn text="TIME" fx:id="timeColumn" prefWidth = "150"/>
             </columns>
         </TableView>
-        <Button fx:id="addReviewButton" layoutX="600.0" layoutY="550.0" mnemonicParsing="false" onAction="#addReview" text="Add comment" />
-        <Button fx:id="editReviewButton" layoutX="550.0" layoutY="550.0" mnemonicParsing="false" onAction="#editReview" text="Edit comment" />
-        <Button fx:id="deleteReviewButton" layoutX="650.0" layoutY="550.0" mnemonicParsing="false" onAction="#deleteReview" text="Delete comment" />
-        <Slider fx:id="ratingSlider" layoutX="600.0" layoutY="500.0" blockIncrement="1.0"
-                cache="true"
+        <Button fx:id="addReviewButton"
+                layoutX="300.0"
+                layoutY="460.0"
+                prefWidth="200.0"
+                prefHeight="40.0"
+                mnemonicParsing="false"
+                onAction="#addReview"
+                text="ADD NEW REVIEW"
+                style="-fx-background-color: #446c0c; -fx-text-fill: #ccb8af; -fx-font-family: 'OCR A Extended';" />
+        <Button fx:id="editReviewButton"
+                layoutX="195.0"
+                layoutY="460.0"
+                prefWidth="200.0"
+                prefHeight="40.0"
+                mnemonicParsing="false"
+                onAction="#editReview"
+                text="EDIT REVIEW"
+                style="-fx-background-color: #fbd686; -fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended';" />
+        <Button fx:id="deleteReviewButton"
+                layoutX="405.0"
+                layoutY="460.0"
+                prefWidth="200.0"
+                prefHeight="40.0"
+                mnemonicParsing="false"
+                onAction="#deleteReview"
+                text="Delete comment"
+                style="-fx-background-color: #e55c22; -fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended';" />
+        <Slider fx:id="ratingSlider"
+                layoutX="100.0"
+                layoutY="412.0"
+                showTickLabels="true"
+                blockIncrement="1.0"
                 majorTickUnit="1.0"
                 max="5.0"
                 min="1.0"
                 minorTickCount="0"
-                showTickLabels="true"
-                showTickMarks="true"
                 snapToTicks="true"
-                value="1.0" />
+                value="1.0"
+                prefWidth="95.0"
+                stylesheets = "@slider.css"
+                />
         <TextArea fx:id="reviewTextField"
-                  layoutX="550.0"
-                  layoutY="100.0"
-                  prefHeight="200.0"
-                  prefWidth="150.0"
+                  layoutX="200.0"
+                  layoutY="400.0"
+                  prefHeight="40.0"
+                  prefWidth="510.0"
                   wrapText="true"
-                  promptText="Type in your comment."/>
+                  promptText="INSERT COMMENT"
+                  style="-fx-prompt-text-fill: #446c0c; -fx-border-color: #446c0c; -fx-alignment: center-left; -fx-font-family: 'OCR A Extended'; -fx-border-width: 2.5px"/>
 
     </children>
 </AnchorPane>
