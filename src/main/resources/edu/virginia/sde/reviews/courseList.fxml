@@ -75,8 +75,9 @@
                    prefHeight="280.0"
                    layoutX = "100.0"
                    layoutY = "250.0"
+                   prefWidth="603.0"
                    onMouseClicked = "#courseClicked"
-                   style=" -fx-text-fill: #372d22; -fx-font-family: 'OCR A Extended'; -fx-font-size: 15px;"
+                   style=" -fx-font-family: 'OCR A Extended'; -fx-font-size: 12px;"
                    stylesheets = "@courseList.css"
                    >
             <columns>

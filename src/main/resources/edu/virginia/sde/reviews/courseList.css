@@ -1,30 +1,68 @@
-#tableView .column-header-background {
-    -fx-background-color: #446c0c; /* Color for the first column header */
+.table-view {
+    -fx-background-color: transparent;
 }
-
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background{
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 5px 0;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
 #subjectColumn .label {
-    -fx-background-color: #ccb8af; /* Background color for cells in the SUBJECT column */
+    -fx-background-color: #446c0c;
+    -fx-text-fill: #ccb8af;
 }
-
 #numberColumn .label {
-    -fx-background-color: #ccb8af; /* Background color for cells in the NUMBER column */
+    -fx-background-color: #9eab5c;
+    -fx-text-fill: #372d22;
 }
-
 #titleColumn .label {
-    -fx-background-color: #ccb8af; /* Background color for cells in the TITLE column */
+    -fx-background-color: #fbd686;
+    -fx-text-fill: #372d22;
 }
-
 #avgScoreColumn .label {
-    -fx-background-color: #ccb8af; /* Background color for cells in the RATING column */
+    -fx-background-color: #e55c22;
+    -fx-text-fill: #372d22;
 }
-
-#tableView .column-header {
-    -fx-border-width: 0 0 1 0; /* Bottom border for column headers (except the last one) */
-    -fx-border-color: transparent transparent #446c0c transparent; /* Border color for column headers */
-}
-
 #tableView .table-row-cell {
-    -fx-background-color: #ccb8af; /* Background color for cells in other columns */
-    -fx-border-width: 0 0 1 0; /* Bottom border for cells in other columns */
-    -fx-border-color: transparent transparent #color1 transparent; /* Border color for cells in other columns */
+    -fx-background-color: #ccb8af;
+}
+#tableView .table-row-cell:odd {
+    -fx-background-color: derive(#ccb8af, 20%);
+}
+#tableView .table-row-cell:hover {
+    -fx-background-color: derive(#ccb8af, 60%);
+    -fx-text-background-color: #e55c22;
+}
+/* Style for the TableCell */
+.table-cell {
+    -fx-border-color: #372d22;
+    -fx-padding: 2 0 2 10px;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:vertical .track,
+.table-view .virtual-flow .scroll-bar:vertical .track-background,
+.table-view .virtual-flow .scroll-bar:horizontal,
+.table-view .virtual-flow .scroll-bar:horizontal .track,
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar .increment-button,
+.table-view .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  #372d22;
+}
+.table-view .virtual-flow .scroll-bar:horizontal .thumb {
+    -fx-background-color: #372d22;
 }
