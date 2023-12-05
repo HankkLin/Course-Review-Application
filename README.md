@@ -19,6 +19,4 @@ List the primary contributions of each author. It is recommended to update this 
 
 ## Issues
 
-In Course Search Screen, when click on a course. Possible to jump out "Click on empty course exception". 
-Exception is handled if the user really clicked on an empty course, so the user just have to search again. 
-Not sure why, chances of happening is really low, only met it around one or two times.
+Average score of a course won't get refresh after edit or delete. Will do after leave the page
